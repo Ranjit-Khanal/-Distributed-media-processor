@@ -1,0 +1,75 @@
+config:
+  target: "http://localhost:8080"
+  phases:
+    # Warm-up phase
+    - duration: 30
+      arrivalRate: 2
+      name: "Warm up"
+    # Ramp up phase
+    - duration: 60
+      arrivalRate: 5
+      rampTo: 20
+      name: "Ramp up load"
+    # Sustained load phase
+    - duration: 120
+      arrivalRate: 20
+      name: "Sustained load"
+    # Spike test
+    - duration: 30
+      arrivalRate: 50
+      name: "Spike test"
+    # Cool down
+    - duration: 30
+      arrivalRate: 5
+      name: "Cool down"
+  processor: "./artillery-processor.js"
+  variables:
+    apiToken: "{{ $processEnvironment.API_TOKEN || 'your-auth-token-here' }}"
+  plugins:
+    expect: {}
+  defaults:
+    headers:
+      Authorization: "Bearer {{ apiToken }}"
+      Content-Type: "application/json"
+
+scenarios:
+  - name: "Search Media Files"
+    weight: 70
+    flow:
+      - get:
+          url: "/api/media/search?query={{ $randomString() }}&per_page=15"
+          capture:
+            - json: "$.data[0].id"
+              as: "mediaId"
+          expect:
+            - statusCode: 200
+            - contentType: json
+            - hasProperty: data
+      - think: 2
+      - get:
+          url: "/api/media/{{ mediaId }}/status"
+          expect:
+            - statusCode: 200
+            - contentType: json
+
+  - name: "List User Media"
+    weight: 20
+    flow:
+      - get:
+          url: "/api/media?per_page=15&sort_by=created_at&sort_order=desc"
+          expect:
+            - statusCode: 200
+            - contentType: json
+            - hasProperty: data
+      - think: 1
+
+  - name: "Search with Filters"
+    weight: 10
+    flow:
+      - get:
+          url: "/api/media/search?query=test&type=image&status=completed&per_page=10"
+          expect:
+            - statusCode: 200
+            - contentType: json
+      - think: 1
+
