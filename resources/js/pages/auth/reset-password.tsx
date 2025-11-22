@@ -16,7 +16,7 @@ interface ResetPasswordProps {
 export default function ResetPassword({ token, email }: ResetPasswordProps) {
     return (
         <AuthLayout
-            title="Reset password"
+            title="Set new password"
             description="Please enter your new password below"
         >
             <Head title="Reset password" />
@@ -29,14 +29,16 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
                 {({ processing, errors }) => (
                     <div className="grid gap-6">
                         <div className="grid gap-2">
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email" className="text-slate-700 dark:text-slate-300">
+                                Email
+                            </Label>
                             <Input
                                 id="email"
                                 type="email"
                                 name="email"
                                 autoComplete="email"
                                 value={email}
-                                className="mt-1 block w-full"
+                                className="mt-1 block w-full bg-slate-50 dark:bg-slate-800/50"
                                 readOnly
                             />
                             <InputError
@@ -46,30 +48,32 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password" className="text-slate-700 dark:text-slate-300">
+                                New Password
+                            </Label>
                             <Input
                                 id="password"
                                 type="password"
                                 name="password"
                                 autoComplete="new-password"
-                                className="mt-1 block w-full"
+                                className="mt-1 block w-full bg-white dark:bg-slate-800"
                                 autoFocus
-                                placeholder="Password"
+                                placeholder="Enter your new password"
                             />
                             <InputError message={errors.password} />
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="password_confirmation">
-                                Confirm password
+                            <Label htmlFor="password_confirmation" className="text-slate-700 dark:text-slate-300">
+                                Confirm Password
                             </Label>
                             <Input
                                 id="password_confirmation"
                                 type="password"
                                 name="password_confirmation"
                                 autoComplete="new-password"
-                                className="mt-1 block w-full"
-                                placeholder="Confirm password"
+                                className="mt-1 block w-full bg-white dark:bg-slate-800"
+                                placeholder="Confirm your new password"
                             />
                             <InputError
                                 message={errors.password_confirmation}
@@ -79,7 +83,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
 
                         <Button
                             type="submit"
-                            className="mt-4 w-full"
+                            className="mt-4 w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/25 transition-all hover:shadow-xl hover:shadow-blue-500/30"
                             disabled={processing}
                             data-test="reset-password-button"
                         >

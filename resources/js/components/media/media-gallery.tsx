@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { router } from '@inertiajs/react';
-import { Download, Eye, Image as ImageIcon, Play, Trash2, Video } from 'lucide-react';
+import { Download, Eye, Image as ImageIcon, Play, Trash2, Video, X } from 'lucide-react';
 import { useState } from 'react';
 
 interface MediaFile {
@@ -13,6 +13,7 @@ interface MediaFile {
     original_name: string;
     type: 'image' | 'video';
     mime_type: string;
+    path?: string;
     size: number;
     status: 'pending' | 'processing' | 'completed' | 'failed';
     thumbnail_path?: string;
