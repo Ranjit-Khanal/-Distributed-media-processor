@@ -27,11 +27,16 @@ class MediaController extends Controller
             'sort_order' => $request->input('sort_order', 'desc'),
         ];
 
+        // Filter out empty values and 'all' values
+        $filters = array_filter($filters, function ($value) {
+            return $value !== null && $value !== '' && $value !== 'all';
+        });
+
         $perPage = min($request->input('per_page', 15), 100);
 
         $mediaFiles = $this->mediaService->getUserMedia(
             $request->user()->id,
-            array_filter($filters),
+            $filters,
             $perPage
         );
 
