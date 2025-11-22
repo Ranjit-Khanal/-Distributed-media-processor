@@ -32,7 +32,7 @@ export default function TwoFactorChallenge() {
         }
 
         return {
-            title: 'Authentication Code',
+            title: 'Two-Factor Authentication',
             description:
                 'Enter the authentication code provided by your authenticator application.',
             toggleText: 'login using a recovery code',
@@ -63,16 +63,22 @@ export default function TwoFactorChallenge() {
                         <>
                             {showRecoveryInput ? (
                                 <>
-                                    <Input
-                                        name="recovery_code"
-                                        type="text"
-                                        placeholder="Enter recovery code"
-                                        autoFocus={showRecoveryInput}
-                                        required
-                                    />
-                                    <InputError
-                                        message={errors.recovery_code}
-                                    />
+                                    <div className="grid gap-2">
+                                        <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                                            Recovery Code
+                                        </label>
+                                        <Input
+                                            name="recovery_code"
+                                            type="text"
+                                            placeholder="Enter recovery code"
+                                            autoFocus={showRecoveryInput}
+                                            required
+                                            className="bg-white dark:bg-slate-800"
+                                        />
+                                        <InputError
+                                            message={errors.recovery_code}
+                                        />
+                                    </div>
                                 </>
                             ) : (
                                 <div className="flex flex-col items-center justify-center space-y-3 text-center">
@@ -104,17 +110,17 @@ export default function TwoFactorChallenge() {
 
                             <Button
                                 type="submit"
-                                className="w-full"
+                                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/25 transition-all hover:shadow-xl hover:shadow-blue-500/30"
                                 disabled={processing}
                             >
                                 Continue
                             </Button>
 
-                            <div className="text-center text-sm text-muted-foreground">
+                            <div className="text-center text-sm text-slate-600 dark:text-slate-400">
                                 <span>or you can </span>
                                 <button
                                     type="button"
-                                    className="cursor-pointer text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                                    className="cursor-pointer font-medium text-blue-600 underline decoration-blue-300 underline-offset-4 transition-colors duration-300 ease-out hover:text-blue-700 hover:decoration-blue-400 dark:text-blue-400 dark:decoration-blue-500 dark:hover:text-blue-300"
                                     onClick={() =>
                                         toggleRecoveryMode(clearErrors)
                                     }

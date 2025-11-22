@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { router } from '@inertiajs/react';
-import { Download, Eye, Image as ImageIcon, Play, Trash2, Video } from 'lucide-react';
+import { Download, Eye, Image as ImageIcon, Play, Trash2, Video, X } from 'lucide-react';
 import { useState } from 'react';
 
 interface MediaFile {
@@ -13,6 +13,8 @@ interface MediaFile {
     original_name: string;
     type: 'image' | 'video';
     mime_type: string;
+    path?: string;
+    compressed_path?: string;
     size: number;
     status: 'pending' | 'processing' | 'completed' | 'failed';
     thumbnail_path?: string;
@@ -82,6 +84,24 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
         if (media.thumbnail_path) {
             return `/storage/${media.thumbnail_path}`;
         }
+        return null;
+    };
+
+    const getMediaUrl = (media: MediaFile) => {
+        // First try the main path
+        if (media.path) {
+            return `/storage/${media.path}`;
+        }
+        // Fall back to compressed path
+        if (media.compressed_path) {
+            return `/storage/${media.compressed_path}`;
+        }
+        // Fall back to thumbnail
+        const thumbnailUrl = getThumbnailUrl(media);
+        if (thumbnailUrl) {
+            return thumbnailUrl;
+        }
+        // No valid URL available
         return null;
     };
 
@@ -257,24 +277,48 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="absolute top-0 right-0"
+                            className="absolute top-0 right-0 z-10 bg-white/90 hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-900"
                             onClick={() => setSelectedMedia(null)}
                         >
                             <X className="size-4" />
                         </Button>
-                        {selectedMedia.type === 'video' ? (
-                            <video
-                                src={`/storage/${selectedMedia.path}`}
-                                controls
-                                className="max-h-[90vh] rounded-lg"
-                            />
-                        ) : (
-                            <img
-                                src={`/storage/${selectedMedia.path}`}
-                                alt={selectedMedia.name}
-                                className="max-h-[90vh] rounded-lg"
-                            />
-                        )}
+                        {(() => {
+                            const mediaUrl = getMediaUrl(selectedMedia);
+                            
+                            if (!mediaUrl) {
+                                return (
+                                    <div className="flex flex-col items-center justify-center rounded-lg bg-slate-100 p-12 dark:bg-slate-800">
+                                        {selectedMedia.type === 'video' ? (
+                                            <Video className="mb-4 size-16 text-slate-400" />
+                                        ) : (
+                                            <ImageIcon className="mb-4 size-16 text-slate-400" />
+                                        )}
+                                        <p className="text-lg font-medium text-slate-700 dark:text-slate-300">
+                                            Media not available
+                                        </p>
+                                        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                                            {selectedMedia.status === 'processing' 
+                                                ? 'Media is still being processed' 
+                                                : 'Media file path is not available'}
+                                        </p>
+                                    </div>
+                                );
+                            }
+
+                            return selectedMedia.type === 'video' ? (
+                                <video
+                                    src={mediaUrl}
+                                    controls
+                                    className="max-h-[90vh] rounded-lg"
+                                />
+                            ) : (
+                                <img
+                                    src={mediaUrl}
+                                    alt={selectedMedia.name}
+                                    className="max-h-[90vh] rounded-lg object-contain"
+                                />
+                            );
+                        })()}
                     </div>
                 </div>
             )}

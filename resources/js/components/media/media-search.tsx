@@ -15,22 +15,22 @@ interface MediaSearchProps {
 
 export function MediaSearch({ initialQuery = '', initialType = '', initialStatus = '' }: MediaSearchProps) {
     const [query, setQuery] = useState(initialQuery);
-    const [type, setType] = useState(initialType);
-    const [status, setStatus] = useState(initialStatus);
+    const [type, setType] = useState(initialType || 'all');
+    const [status, setStatus] = useState(initialStatus || 'all');
 
     const handleSearch = () => {
         const params = new URLSearchParams();
         if (query) params.set('query', query);
-        if (type) params.set('type', type);
-        if (status) params.set('status', status);
+        if (type && type !== 'all') params.set('type', type);
+        if (status && status !== 'all') params.set('status', status);
         
         router.get(`/media/search?${params.toString()}`);
     };
 
     const handleReset = () => {
         setQuery('');
-        setType('');
-        setStatus('');
+        setType('all');
+        setStatus('all');
         router.get('/media');
     };
 
@@ -68,7 +68,7 @@ export function MediaSearch({ initialQuery = '', initialType = '', initialStatus
                                     <SelectValue placeholder="All types" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="">All types</SelectItem>
+                                    <SelectItem value="all">All types</SelectItem>
                                     <SelectItem value="image">Image</SelectItem>
                                     <SelectItem value="video">Video</SelectItem>
                                 </SelectContent>
@@ -82,7 +82,7 @@ export function MediaSearch({ initialQuery = '', initialType = '', initialStatus
                                     <SelectValue placeholder="All statuses" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="">All statuses</SelectItem>
+                                    <SelectItem value="all">All statuses</SelectItem>
                                     <SelectItem value="pending">Pending</SelectItem>
                                     <SelectItem value="processing">Processing</SelectItem>
                                     <SelectItem value="completed">Completed</SelectItem>

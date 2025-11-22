@@ -13,8 +13,8 @@ import AuthLayout from '@/layouts/auth-layout';
 export default function Register() {
     return (
         <AuthLayout
-            title="Create an account"
-            description="Enter your details below to create your account"
+            title="Create your account"
+            description="Get started with your free account today"
         >
             <Head title="Register" />
             <Form
@@ -27,7 +27,9 @@ export default function Register() {
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name" className="text-slate-700 dark:text-slate-300">
+                                    Full Name
+                                </Label>
                                 <Input
                                     id="name"
                                     type="text"
@@ -36,7 +38,8 @@ export default function Register() {
                                     tabIndex={1}
                                     autoComplete="name"
                                     name="name"
-                                    placeholder="Full name"
+                                    placeholder="John Doe"
+                                    className="bg-white dark:bg-slate-800"
                                 />
                                 <InputError
                                     message={errors.name}
@@ -45,7 +48,9 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <Label htmlFor="email" className="text-slate-700 dark:text-slate-300">
+                                    Email address
+                                </Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -54,12 +59,15 @@ export default function Register() {
                                     autoComplete="email"
                                     name="email"
                                     placeholder="email@example.com"
+                                    className="bg-white dark:bg-slate-800"
                                 />
                                 <InputError message={errors.email} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password" className="text-slate-700 dark:text-slate-300">
+                                    Password
+                                </Label>
                                 <Input
                                     id="password"
                                     type="password"
@@ -67,13 +75,14 @@ export default function Register() {
                                     tabIndex={3}
                                     autoComplete="new-password"
                                     name="password"
-                                    placeholder="Password"
+                                    placeholder="Create a strong password"
+                                    className="bg-white dark:bg-slate-800"
                                 />
                                 <InputError message={errors.password} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password_confirmation">
+                                <Label htmlFor="password_confirmation" className="text-slate-700 dark:text-slate-300">
                                     Confirm password
                                 </Label>
                                 <Input
@@ -83,7 +92,8 @@ export default function Register() {
                                     tabIndex={4}
                                     autoComplete="new-password"
                                     name="password_confirmation"
-                                    placeholder="Confirm password"
+                                    placeholder="Confirm your password"
+                                    className="bg-white dark:bg-slate-800"
                                 />
                                 <InputError
                                     message={errors.password_confirmation}
@@ -92,7 +102,7 @@ export default function Register() {
 
                             <Button
                                 type="submit"
-                                className="mt-2 w-full"
+                                className="mt-2 w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/25 transition-all hover:shadow-xl hover:shadow-blue-500/30"
                                 tabIndex={5}
                                 data-test="register-user-button"
                             >
@@ -101,9 +111,13 @@ export default function Register() {
                             </Button>
                         </div>
 
-                        <div className="text-center text-sm text-muted-foreground">
+                        <div className="text-center text-sm text-slate-600 dark:text-slate-400">
                             Already have an account?{' '}
-                            <TextLink href={login()} tabIndex={6}>
+                            <TextLink 
+                                href={login()} 
+                                className="font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                                tabIndex={6}
+                            >
                                 Log in
                             </TextLink>
                         </div>
