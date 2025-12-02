@@ -1,4 +1,3 @@
-import AppLogoIcon from '@/components/app-logo-icon';
 import { home } from '@/routes';
 import { Link } from '@inertiajs/react';
 import { Image } from 'lucide-react';
@@ -61,7 +60,7 @@ export default function AuthSimpleLayout({
                                     </span>
                                 </div>
                             </Link>
-                            
+
                             {/* Title and Description */}
                             <div className="space-y-2 text-center">
                                 <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">

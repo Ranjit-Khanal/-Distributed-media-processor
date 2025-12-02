@@ -19,7 +19,10 @@ export default function ConfirmPassword() {
                 {({ processing, errors }) => (
                     <div className="space-y-6">
                         <div className="grid gap-2">
-                            <Label htmlFor="password" className="text-slate-700 dark:text-slate-300">
+                            <Label
+                                htmlFor="password"
+                                className="text-slate-700 dark:text-slate-300"
+                            >
                                 Password
                             </Label>
                             <Input

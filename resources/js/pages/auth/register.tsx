@@ -27,7 +27,10 @@ export default function Register() {
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="name" className="text-slate-700 dark:text-slate-300">
+                                <Label
+                                    htmlFor="name"
+                                    className="text-slate-700 dark:text-slate-300"
+                                >
                                     Full Name
                                 </Label>
                                 <Input
@@ -48,7 +51,10 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email" className="text-slate-700 dark:text-slate-300">
+                                <Label
+                                    htmlFor="email"
+                                    className="text-slate-700 dark:text-slate-300"
+                                >
                                     Email address
                                 </Label>
                                 <Input
@@ -65,7 +71,10 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password" className="text-slate-700 dark:text-slate-300">
+                                <Label
+                                    htmlFor="password"
+                                    className="text-slate-700 dark:text-slate-300"
+                                >
                                     Password
                                 </Label>
                                 <Input
@@ -82,7 +91,10 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password_confirmation" className="text-slate-700 dark:text-slate-300">
+                                <Label
+                                    htmlFor="password_confirmation"
+                                    className="text-slate-700 dark:text-slate-300"
+                                >
                                     Confirm password
                                 </Label>
                                 <Input
@@ -113,8 +125,8 @@ export default function Register() {
 
                         <div className="text-center text-sm text-slate-600 dark:text-slate-400">
                             Already have an account?{' '}
-                            <TextLink 
-                                href={login()} 
+                            <TextLink
+                                href={login()}
                                 className="font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
                                 tabIndex={6}
                             >

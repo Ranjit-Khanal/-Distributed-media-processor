@@ -44,7 +44,10 @@ export default function Login({
 
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="email" className="text-slate-700 dark:text-slate-300">
+                                <Label
+                                    htmlFor="email"
+                                    className="text-slate-700 dark:text-slate-300"
+                                >
                                     Email address
                                 </Label>
                                 <Input
@@ -63,7 +66,10 @@ export default function Login({
 
                             <div className="grid gap-2">
                                 <div className="flex items-center justify-between">
-                                    <Label htmlFor="password" className="text-slate-700 dark:text-slate-300">
+                                    <Label
+                                        htmlFor="password"
+                                        className="text-slate-700 dark:text-slate-300"
+                                    >
                                         Password
                                     </Label>
                                     {canResetPassword && (
@@ -95,7 +101,10 @@ export default function Login({
                                     name="remember"
                                     tabIndex={3}
                                 />
-                                <Label htmlFor="remember" className="text-slate-700 dark:text-slate-300">
+                                <Label
+                                    htmlFor="remember"
+                                    className="text-slate-700 dark:text-slate-300"
+                                >
                                     Remember me
                                 </Label>
                             </div>
@@ -115,8 +124,8 @@ export default function Login({
                         {canRegister && (
                             <div className="text-center text-sm text-slate-600 dark:text-slate-400">
                                 Don't have an account?{' '}
-                                <TextLink 
-                                    href={register()} 
+                                <TextLink
+                                    href={register()}
                                     className="font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
                                     tabIndex={5}
                                 >

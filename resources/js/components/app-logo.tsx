@@ -1,6 +1,5 @@
 import { Image } from 'lucide-react';
 
-
 export default function AppLogo() {
     return (
         <>

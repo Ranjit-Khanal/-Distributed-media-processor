@@ -87,4 +87,3 @@ export default function MediaIndex({ mediaFiles, filters = {} }: Props) {
         </AppLayout>
     );
 }
-

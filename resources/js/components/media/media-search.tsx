@@ -2,7 +2,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import { router } from '@inertiajs/react';
 import { Search } from 'lucide-react';
 import { useState } from 'react';
@@ -13,7 +19,11 @@ interface MediaSearchProps {
     initialStatus?: string;
 }
 
-export function MediaSearch({ initialQuery = '', initialType = '', initialStatus = '' }: MediaSearchProps) {
+export function MediaSearch({
+    initialQuery = '',
+    initialType = '',
+    initialStatus = '',
+}: MediaSearchProps) {
     const [query, setQuery] = useState(initialQuery);
     const [type, setType] = useState(initialType || 'all');
     const [status, setStatus] = useState(initialStatus || 'all');
@@ -23,7 +33,7 @@ export function MediaSearch({ initialQuery = '', initialType = '', initialStatus
         if (query) params.set('query', query);
         if (type && type !== 'all') params.set('type', type);
         if (status && status !== 'all') params.set('status', status);
-        
+
         router.get(`/media/search?${params.toString()}`);
     };
 
@@ -44,7 +54,7 @@ export function MediaSearch({ initialQuery = '', initialType = '', initialStatus
                     <div>
                         <Label htmlFor="search">Search Query</Label>
                         <div className="relative mt-1">
-                            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                            <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
                             <Input
                                 id="search"
                                 placeholder="Search by name..."
@@ -68,7 +78,9 @@ export function MediaSearch({ initialQuery = '', initialType = '', initialStatus
                                     <SelectValue placeholder="All types" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="all">All types</SelectItem>
+                                    <SelectItem value="all">
+                                        All types
+                                    </SelectItem>
                                     <SelectItem value="image">Image</SelectItem>
                                     <SelectItem value="video">Video</SelectItem>
                                 </SelectContent>
@@ -82,11 +94,21 @@ export function MediaSearch({ initialQuery = '', initialType = '', initialStatus
                                     <SelectValue placeholder="All statuses" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="all">All statuses</SelectItem>
-                                    <SelectItem value="pending">Pending</SelectItem>
-                                    <SelectItem value="processing">Processing</SelectItem>
-                                    <SelectItem value="completed">Completed</SelectItem>
-                                    <SelectItem value="failed">Failed</SelectItem>
+                                    <SelectItem value="all">
+                                        All statuses
+                                    </SelectItem>
+                                    <SelectItem value="pending">
+                                        Pending
+                                    </SelectItem>
+                                    <SelectItem value="processing">
+                                        Processing
+                                    </SelectItem>
+                                    <SelectItem value="completed">
+                                        Completed
+                                    </SelectItem>
+                                    <SelectItem value="failed">
+                                        Failed
+                                    </SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
@@ -94,7 +116,7 @@ export function MediaSearch({ initialQuery = '', initialType = '', initialStatus
 
                     <div className="flex gap-2">
                         <Button onClick={handleSearch} className="flex-1">
-                            <Search className="size-4 mr-2" />
+                            <Search className="mr-2 size-4" />
                             Search
                         </Button>
                         <Button variant="outline" onClick={handleReset}>
@@ -106,4 +128,3 @@ export function MediaSearch({ initialQuery = '', initialType = '', initialStatus
         </Card>
     );
 }
-
