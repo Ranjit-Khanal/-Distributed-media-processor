@@ -2,18 +2,15 @@ import { dashboard, login, register } from '@/routes';
 import media from '@/routes/media';
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
-import { 
-    Image, 
-    Video, 
-    Search, 
-    Zap, 
-    Cloud, 
-    Shield, 
-    ArrowRight, 
-    CheckCircle2,
-    Play,
+import {
+    ArrowRight,
+    Cloud,
+    Filter,
+    Image,
+    Search,
+    Shield,
     Upload,
-    Filter
+    Zap,
 } from 'lucide-react';
 
 export default function Welcome({
@@ -27,32 +24,38 @@ export default function Welcome({
         {
             icon: Upload,
             title: 'Easy Upload',
-            description: 'Drag and drop or select files. Supports images and videos with automatic processing.',
+            description:
+                'Drag and drop or select files. Supports images and videos with automatic processing.',
         },
         {
             icon: Zap,
             title: 'Fast Processing',
-            description: 'Queue-based compression and thumbnail generation powered by Redis and FFmpeg.',
+            description:
+                'Queue-based compression and thumbnail generation powered by Redis and FFmpeg.',
         },
         {
             icon: Search,
             title: 'Smart Search',
-            description: 'Full-text search with Meilisearch. Find media by name, tags, type, or metadata.',
+            description:
+                'Full-text search with Meilisearch. Find media by name, tags, type, or metadata.',
         },
         {
             icon: Filter,
             title: 'Advanced Filtering',
-            description: 'Filter by type, status, size, and more. Sort and paginate with ease.',
+            description:
+                'Filter by type, status, size, and more. Sort and paginate with ease.',
         },
         {
             icon: Cloud,
             title: 'Scalable Architecture',
-            description: 'Built for scale with microservice-ready architecture and distributed processing.',
+            description:
+                'Built for scale with microservice-ready architecture and distributed processing.',
         },
         {
             icon: Shield,
             title: 'Secure & Reliable',
-            description: 'Role-based access, API key authentication, and comprehensive error handling.',
+            description:
+                'Role-based access, API key authentication, and comprehensive error handling.',
         },
     ];
 
@@ -138,8 +141,9 @@ export default function Welcome({
                             </span>
                         </h1>
                         <p className="mt-6 text-lg leading-8 text-slate-600 sm:text-xl dark:text-slate-400">
-                            Upload, process, and manage your media files with powerful compression,
-                            intelligent search, and real-time processing. Built for scale with modern
+                            Upload, process, and manage your media files with
+                            powerful compression, intelligent search, and
+                            real-time processing. Built for scale with modern
                             architecture.
                         </p>
                         <div className="mt-10 flex items-center justify-center gap-x-6">
@@ -162,9 +166,10 @@ export default function Welcome({
                                     </Link>
                                     <Link
                                         href={login()}
-                                        className="text-base font-semibold leading-6 text-slate-900 transition-colors hover:text-slate-700 dark:text-slate-300 dark:hover:text-slate-100"
+                                        className="text-base leading-6 font-semibold text-slate-900 transition-colors hover:text-slate-700 dark:text-slate-300 dark:hover:text-slate-100"
                                     >
-                                        Sign in <span aria-hidden="true">→</span>
+                                        Sign in{' '}
+                                        <span aria-hidden="true">→</span>
                                     </Link>
                                 </>
                             )}
@@ -199,7 +204,8 @@ export default function Welcome({
                                 Powerful Features
                             </h2>
                             <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
-                                Everything you need to manage and process your media files efficiently.
+                                Everything you need to manage and process your
+                                media files efficiently.
                             </p>
                         </div>
                         <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:grid-cols-2 lg:max-w-none lg:grid-cols-3">
@@ -231,7 +237,8 @@ export default function Welcome({
                                 How It Works
                             </h2>
                             <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
-                                Simple, fast, and efficient media processing workflow.
+                                Simple, fast, and efficient media processing
+                                workflow.
                             </p>
                         </div>
                         <div className="mx-auto mt-16 max-w-3xl">
@@ -297,7 +304,8 @@ export default function Welcome({
                                 Built with Modern Technology
                             </h2>
                             <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
-                                Powered by industry-leading tools and frameworks.
+                                Powered by industry-leading tools and
+                                frameworks.
                             </p>
                         </div>
                         <div className="mx-auto mt-12 grid max-w-4xl grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6">
@@ -331,7 +339,8 @@ export default function Welcome({
                                     Ready to get started?
                                 </h2>
                                 <p className="mt-4 text-lg leading-8 text-blue-100">
-                                    Start uploading and processing your media files today. No credit card required.
+                                    Start uploading and processing your media
+                                    files today. No credit card required.
                                 </p>
                                 <div className="mt-10 flex items-center justify-center gap-x-6">
                                     {auth.user ? (
@@ -361,11 +370,10 @@ export default function Welcome({
                 <footer className="border-t border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
                     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
                         <div className="text-center text-sm text-slate-600 dark:text-slate-400">
-                            <p>
-                                Distributed Media Library & Processing System
-                            </p>
+                            <p>Distributed Media Library & Processing System</p>
                             <p className="mt-2">
-                                Built with Laravel, React, and modern web technologies.
+                                Built with Laravel, React, and modern web
+                                technologies.
                             </p>
                         </div>
                     </div>

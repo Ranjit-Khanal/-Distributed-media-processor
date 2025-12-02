@@ -1,11 +1,11 @@
 import { MediaStatus } from '@/components/media/media-status';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router } from '@inertiajs/react';
-import { ArrowLeft, Download, Image as ImageIcon, Trash2, Video } from 'lucide-react';
+import { ArrowLeft, Download, Trash2 } from 'lucide-react';
 
 interface MediaFile {
     id: number;
@@ -64,7 +64,9 @@ export default function MediaShow({ mediaFile, mediaStatus }: Props) {
         const k = 1024;
         const sizes = ['Bytes', 'KB', 'MB', 'GB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        return (
+            Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i]
+        );
     };
 
     const formatDuration = (seconds?: number) => {
@@ -138,81 +140,134 @@ export default function MediaShow({ mediaFile, mediaStatus }: Props) {
                             <CardContent className="space-y-4">
                                 <div className="grid grid-cols-2 gap-4 text-sm">
                                     <div>
-                                        <p className="text-muted-foreground">Type</p>
-                                        <p className="font-medium capitalize">{mediaFile.type}</p>
+                                        <p className="text-muted-foreground">
+                                            Type
+                                        </p>
+                                        <p className="font-medium capitalize">
+                                            {mediaFile.type}
+                                        </p>
                                     </div>
                                     <div>
-                                        <p className="text-muted-foreground">Status</p>
-                                        <Badge variant="secondary">{mediaFile.status}</Badge>
+                                        <p className="text-muted-foreground">
+                                            Status
+                                        </p>
+                                        <Badge variant="secondary">
+                                            {mediaFile.status}
+                                        </Badge>
                                     </div>
                                     <div>
-                                        <p className="text-muted-foreground">Size</p>
-                                        <p className="font-medium">{formatFileSize(mediaFile.size)}</p>
+                                        <p className="text-muted-foreground">
+                                            Size
+                                        </p>
+                                        <p className="font-medium">
+                                            {formatFileSize(mediaFile.size)}
+                                        </p>
                                     </div>
                                     <div>
-                                        <p className="text-muted-foreground">MIME Type</p>
-                                        <p className="font-medium">{mediaFile.mime_type}</p>
+                                        <p className="text-muted-foreground">
+                                            MIME Type
+                                        </p>
+                                        <p className="font-medium">
+                                            {mediaFile.mime_type}
+                                        </p>
                                     </div>
                                     {mediaFile.metadata && (
                                         <>
                                             {mediaFile.metadata.width && (
                                                 <div>
-                                                    <p className="text-muted-foreground">Dimensions</p>
+                                                    <p className="text-muted-foreground">
+                                                        Dimensions
+                                                    </p>
                                                     <p className="font-medium">
-                                                        {mediaFile.metadata.width} × {mediaFile.metadata.height}
+                                                        {
+                                                            mediaFile.metadata
+                                                                .width
+                                                        }{' '}
+                                                        ×{' '}
+                                                        {
+                                                            mediaFile.metadata
+                                                                .height
+                                                        }
                                                     </p>
                                                 </div>
                                             )}
                                             {mediaFile.metadata.duration && (
                                                 <div>
-                                                    <p className="text-muted-foreground">Duration</p>
-                                                    <p className="font-medium">{formatDuration(mediaFile.metadata.duration)}</p>
+                                                    <p className="text-muted-foreground">
+                                                        Duration
+                                                    </p>
+                                                    <p className="font-medium">
+                                                        {formatDuration(
+                                                            mediaFile.metadata
+                                                                .duration,
+                                                        )}
+                                                    </p>
                                                 </div>
                                             )}
                                             {mediaFile.metadata.codec && (
                                                 <div>
-                                                    <p className="text-muted-foreground">Codec</p>
-                                                    <p className="font-medium">{mediaFile.metadata.codec}</p>
+                                                    <p className="text-muted-foreground">
+                                                        Codec
+                                                    </p>
+                                                    <p className="font-medium">
+                                                        {
+                                                            mediaFile.metadata
+                                                                .codec
+                                                        }
+                                                    </p>
                                                 </div>
                                             )}
                                         </>
                                     )}
                                     <div>
-                                        <p className="text-muted-foreground">Uploaded</p>
+                                        <p className="text-muted-foreground">
+                                            Uploaded
+                                        </p>
                                         <p className="font-medium">
-                                            {new Date(mediaFile.created_at).toLocaleString()}
+                                            {new Date(
+                                                mediaFile.created_at,
+                                            ).toLocaleString()}
                                         </p>
                                     </div>
                                 </div>
 
-                                {mediaFile.tags && mediaFile.tags.length > 0 && (
-                                    <div>
-                                        <p className="text-sm text-muted-foreground mb-2">Tags</p>
-                                        <div className="flex flex-wrap gap-2">
-                                            {mediaFile.tags.map((tag) => (
-                                                <Badge key={tag.id} variant="outline">
-                                                    {tag.name}
-                                                </Badge>
-                                            ))}
+                                {mediaFile.tags &&
+                                    mediaFile.tags.length > 0 && (
+                                        <div>
+                                            <p className="mb-2 text-sm text-muted-foreground">
+                                                Tags
+                                            </p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {mediaFile.tags.map((tag) => (
+                                                    <Badge
+                                                        key={tag.id}
+                                                        variant="outline"
+                                                    >
+                                                        {tag.name}
+                                                    </Badge>
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
-                                )}
+                                    )}
 
                                 <div className="flex gap-2 pt-4">
                                     <Button
                                         variant="outline"
                                         onClick={() => {
-                                            window.open(`/storage/${mediaFile.path}`, '_blank');
+                                            window.open(
+                                                `/storage/${mediaFile.path}`,
+                                                '_blank',
+                                            );
                                         }}
                                     >
-                                        <Download className="size-4 mr-2" />
+                                        <Download className="mr-2 size-4" />
                                         Download
                                     </Button>
                                     <Button
                                         variant="destructive"
                                         onClick={handleDelete}
                                     >
-                                        <Trash2 className="size-4 mr-2" />
+                                        <Trash2 className="mr-2 size-4" />
                                         Delete
                                     </Button>
                                 </div>
@@ -224,4 +279,3 @@ export default function MediaShow({ mediaFile, mediaStatus }: Props) {
         </AppLayout>
     );
 }
-

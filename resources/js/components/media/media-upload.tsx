@@ -1,5 +1,11 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { router } from '@inertiajs/react';
@@ -21,12 +27,25 @@ export function MediaUpload({ onUploadSuccess }: MediaUploadProps) {
 
     const handleFileSelect = (file: File) => {
         if (file) {
-            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'video/mp4', 'video/mpeg', 'video/quicktime', 'video/x-msvideo', 'video/webm'];
+            const validTypes = [
+                'image/jpeg',
+                'image/jpg',
+                'image/png',
+                'image/gif',
+                'image/webp',
+                'video/mp4',
+                'video/mpeg',
+                'video/quicktime',
+                'video/x-msvideo',
+                'video/webm',
+            ];
             if (validTypes.includes(file.type)) {
                 setSelectedFile(file);
                 setErrors({});
             } else {
-                setErrors({ file: 'Invalid file type. Please upload an image or video.' });
+                setErrors({
+                    file: 'Invalid file type. Please upload an image or video.',
+                });
             }
         }
     };
@@ -53,7 +72,7 @@ export function MediaUpload({ onUploadSuccess }: MediaUploadProps) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         if (!selectedFile) {
             setErrors({ file: 'Please select a file to upload' });
             return;
@@ -61,7 +80,7 @@ export function MediaUpload({ onUploadSuccess }: MediaUploadProps) {
 
         const formData = new FormData();
         formData.append('file', selectedFile);
-        tags.filter(tag => tag.trim()).forEach(tag => {
+        tags.filter((tag) => tag.trim()).forEach((tag) => {
             formData.append('tags[]', tag.trim());
         });
 
@@ -101,19 +120,23 @@ export function MediaUpload({ onUploadSuccess }: MediaUploadProps) {
         const k = 1024;
         const sizes = ['Bytes', 'KB', 'MB', 'GB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        return (
+            Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i]
+        );
     };
 
     return (
         <Card>
             <CardHeader>
                 <CardTitle>Upload Media</CardTitle>
-                <CardDescription>Upload photos or videos to your media library</CardDescription>
+                <CardDescription>
+                    Upload photos or videos to your media library
+                </CardDescription>
             </CardHeader>
             <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div
-                        className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+                        className={`rounded-lg border-2 border-dashed p-8 text-center transition-colors ${
                             dragActive
                                 ? 'border-primary bg-primary/5'
                                 : 'border-border hover:border-primary/50'
@@ -134,12 +157,15 @@ export function MediaUpload({ onUploadSuccess }: MediaUploadProps) {
                                 }
                             }}
                         />
-                        
+
                         {selectedFile ? (
                             <div className="space-y-2">
-                                <p className="font-medium">{selectedFile.name}</p>
+                                <p className="font-medium">
+                                    {selectedFile.name}
+                                </p>
                                 <p className="text-sm text-muted-foreground">
-                                    {formatFileSize(selectedFile.size)} • {selectedFile.type}
+                                    {formatFileSize(selectedFile.size)} •{' '}
+                                    {selectedFile.type}
                                 </p>
                                 <Button
                                     type="button"
@@ -164,7 +190,9 @@ export function MediaUpload({ onUploadSuccess }: MediaUploadProps) {
                                     <Button
                                         type="button"
                                         variant="outline"
-                                        onClick={() => fileInputRef.current?.click()}
+                                        onClick={() =>
+                                            fileInputRef.current?.click()
+                                        }
                                     >
                                         Select File
                                     </Button>
@@ -177,7 +205,9 @@ export function MediaUpload({ onUploadSuccess }: MediaUploadProps) {
                     </div>
 
                     {errors.file && (
-                        <p className="text-sm text-destructive">{errors.file}</p>
+                        <p className="text-sm text-destructive">
+                            {errors.file}
+                        </p>
                     )}
 
                     <div className="space-y-2">
@@ -186,7 +216,9 @@ export function MediaUpload({ onUploadSuccess }: MediaUploadProps) {
                             <div key={index} className="flex gap-2">
                                 <Input
                                     value={tag}
-                                    onChange={(e) => updateTag(index, e.target.value)}
+                                    onChange={(e) =>
+                                        updateTag(index, e.target.value)
+                                    }
                                     placeholder="Enter tag name"
                                 />
                                 {tags.length > 1 && (
@@ -211,7 +243,11 @@ export function MediaUpload({ onUploadSuccess }: MediaUploadProps) {
                         </Button>
                     </div>
 
-                    <Button type="submit" disabled={!selectedFile || processing} className="w-full">
+                    <Button
+                        type="submit"
+                        disabled={!selectedFile || processing}
+                        className="w-full"
+                    >
                         {processing ? 'Uploading...' : 'Upload Media'}
                     </Button>
                 </form>
@@ -219,4 +255,3 @@ export function MediaUpload({ onUploadSuccess }: MediaUploadProps) {
         </Card>
     );
 }
-

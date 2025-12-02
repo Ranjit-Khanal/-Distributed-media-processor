@@ -1,7 +1,13 @@
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { CheckCircle, Clock, XCircle, Loader2 } from 'lucide-react';
+import { CheckCircle, Clock, Loader2, XCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 interface MediaStatusProps {
@@ -9,7 +15,10 @@ interface MediaStatusProps {
     initialStatus?: string;
 }
 
-export function MediaStatus({ mediaId, initialStatus = 'pending' }: MediaStatusProps) {
+export function MediaStatus({
+    mediaId,
+    initialStatus = 'pending',
+}: MediaStatusProps) {
     const [status, setStatus] = useState(initialStatus);
     const [progress, setProgress] = useState(0);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -19,7 +28,7 @@ export function MediaStatus({ mediaId, initialStatus = 'pending' }: MediaStatusP
             const interval = setInterval(() => {
                 fetch(`/api/media/${mediaId}/status`, {
                     headers: {
-                        'Accept': 'application/json',
+                        Accept: 'application/json',
                     },
                 })
                     .then((res) => res.json())
@@ -28,8 +37,11 @@ export function MediaStatus({ mediaId, initialStatus = 'pending' }: MediaStatusP
                             setStatus(data.data.status);
                             setProgress(data.data.progress || 0);
                             setErrorMessage(data.data.error_message || null);
-                            
-                            if (data.data.status === 'completed' || data.data.status === 'failed') {
+
+                            if (
+                                data.data.status === 'completed' ||
+                                data.data.status === 'failed'
+                            ) {
                                 clearInterval(interval);
                             }
                         }
@@ -50,7 +62,9 @@ export function MediaStatus({ mediaId, initialStatus = 'pending' }: MediaStatusP
             case 'failed':
                 return <XCircle className="size-5 text-red-500" />;
             case 'processing':
-                return <Loader2 className="size-5 text-yellow-500 animate-spin" />;
+                return (
+                    <Loader2 className="size-5 animate-spin text-yellow-500" />
+                );
             default:
                 return <Clock className="size-5 text-gray-500" />;
         }
@@ -80,29 +94,47 @@ export function MediaStatus({ mediaId, initialStatus = 'pending' }: MediaStatusP
             </CardHeader>
             <CardContent className="space-y-4">
                 <div>
-                    <div className="flex items-center justify-between mb-2">
+                    <div className="mb-2 flex items-center justify-between">
                         <span className="text-sm font-medium">Progress</span>
-                        <span className="text-sm text-muted-foreground">{progress}%</span>
+                        <span className="text-sm text-muted-foreground">
+                            {progress}%
+                        </span>
                     </div>
                     <Progress value={progress} className="h-2" />
                 </div>
 
                 <div className="space-y-2">
                     <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Compression</span>
-                        <Badge variant={status === 'completed' ? 'default' : 'secondary'}>
+                        <span className="text-muted-foreground">
+                            Compression
+                        </span>
+                        <Badge
+                            variant={
+                                status === 'completed' ? 'default' : 'secondary'
+                            }
+                        >
                             {status === 'completed' ? 'Done' : 'Pending'}
                         </Badge>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Thumbnails</span>
-                        <Badge variant={status === 'completed' ? 'default' : 'secondary'}>
+                        <span className="text-muted-foreground">
+                            Thumbnails
+                        </span>
+                        <Badge
+                            variant={
+                                status === 'completed' ? 'default' : 'secondary'
+                            }
+                        >
                             {status === 'completed' ? 'Done' : 'Pending'}
                         </Badge>
                     </div>
                     <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">Metadata</span>
-                        <Badge variant={status === 'completed' ? 'default' : 'secondary'}>
+                        <Badge
+                            variant={
+                                status === 'completed' ? 'default' : 'secondary'
+                            }
+                        >
                             {status === 'completed' ? 'Done' : 'Pending'}
                         </Badge>
                     </div>
@@ -117,4 +149,3 @@ export function MediaStatus({ mediaId, initialStatus = 'pending' }: MediaStatusP
         </Card>
     );
 }
-

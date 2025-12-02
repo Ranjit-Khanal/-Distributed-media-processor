@@ -13,7 +13,7 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, Image, LayoutGrid } from 'lucide-react';
+import { Image, LayoutGrid } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -28,8 +28,6 @@ const mainNavItems: NavItem[] = [
         icon: Image,
     },
 ];
-
-
 
 export function AppSidebar() {
     return (

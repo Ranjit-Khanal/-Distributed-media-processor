@@ -1,10 +1,9 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { router } from '@inertiajs/react';
-import { Download, Eye, Image as ImageIcon, Play, Trash2, Video, X } from 'lucide-react';
+import { Eye, Image as ImageIcon, Trash2, Video, X } from 'lucide-react';
 import { useState } from 'react';
 
 interface MediaFile {
@@ -51,7 +50,9 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
         const k = 1024;
         const sizes = ['Bytes', 'KB', 'MB', 'GB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        return (
+            Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i]
+        );
     };
 
     const getStatusColor = (status: string) => {
@@ -108,11 +109,13 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
     if (mediaFiles.data.length === 0) {
         return (
             <Card>
-                    <CardContent className="flex flex-col items-center justify-center py-12">
-                        <ImageIcon className="mb-4 size-12 text-muted-foreground" />
-                        <p className="text-muted-foreground">No media files yet</p>
-                        <p className="mt-2 text-sm text-muted-foreground">Upload your first file to get started</p>
-                    </CardContent>
+                <CardContent className="flex flex-col items-center justify-center py-12">
+                    <ImageIcon className="mb-4 size-12 text-muted-foreground" />
+                    <p className="text-muted-foreground">No media files yet</p>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                        Upload your first file to get started
+                    </p>
+                </CardContent>
             </Card>
         );
     }
@@ -137,7 +140,8 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
                     </Button>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                    {mediaFiles.total} {mediaFiles.total === 1 ? 'file' : 'files'}
+                    {mediaFiles.total}{' '}
+                    {mediaFiles.total === 1 ? 'file' : 'files'}
                 </p>
             </div>
 
@@ -145,7 +149,7 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
                 className={cn(
                     viewMode === 'grid'
                         ? 'grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-                        : 'space-y-2'
+                        : 'space-y-2',
                 )}
             >
                 {mediaFiles.data.map((media) => (
@@ -153,16 +157,19 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
                         key={media.id}
                         className={cn(
                             'group relative overflow-hidden transition-shadow hover:shadow-lg',
-                            viewMode === 'list' && 'flex gap-4'
+                            viewMode === 'list' && 'flex gap-4',
                         )}
                     >
                         <div
                             className={cn(
                                 'relative',
-                                viewMode === 'grid' ? 'aspect-square' : 'w-32 h-32 flex-shrink-0'
+                                viewMode === 'grid'
+                                    ? 'aspect-square'
+                                    : 'h-32 w-32 flex-shrink-0',
                             )}
                         >
-                            {media.status === 'completed' && getThumbnailUrl(media) ? (
+                            {media.status === 'completed' &&
+                            getThumbnailUrl(media) ? (
                                 <img
                                     src={getThumbnailUrl(media)!}
                                     alt={media.name}
@@ -177,8 +184,8 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
                                     )}
                                 </div>
                             )}
-                            
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-colors group-hover:bg-black/40 group-hover:opacity-100">
                                 <div className="flex gap-2">
                                     <Button
                                         size="icon"
@@ -200,16 +207,26 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
                             <div className="absolute top-2 left-2">
                                 <Badge
                                     variant="secondary"
-                                    className={cn('text-white', getStatusColor(media.status))}
+                                    className={cn(
+                                        'text-white',
+                                        getStatusColor(media.status),
+                                    )}
                                 >
                                     {media.status}
                                 </Badge>
                             </div>
                         </div>
 
-                        <CardContent className={cn('p-4', viewMode === 'list' && 'flex-1')}>
+                        <CardContent
+                            className={cn(
+                                'p-4',
+                                viewMode === 'list' && 'flex-1',
+                            )}
+                        >
                             <div className="space-y-1">
-                                <p className="font-medium truncate">{media.name}</p>
+                                <p className="truncate font-medium">
+                                    {media.name}
+                                </p>
                                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                                     {media.type === 'video' ? (
                                         <Video className="size-3" />
@@ -221,13 +238,16 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
                                         <>
                                             <span>•</span>
                                             <span>
-                                                {media.metadata.width} × {media.metadata.height}
+                                                {media.metadata.width} ×{' '}
+                                                {media.metadata.height}
                                             </span>
                                         </>
                                     )}
                                 </div>
                                 <p className="text-xs text-muted-foreground">
-                                    {new Date(media.created_at).toLocaleDateString()}
+                                    {new Date(
+                                        media.created_at,
+                                    ).toLocaleDateString()}
                                 </p>
                             </div>
                         </CardContent>
@@ -243,7 +263,9 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
                         size="sm"
                         disabled={mediaFiles.current_page === 1}
                         onClick={() => {
-                            router.get('/media', { page: mediaFiles.current_page - 1 });
+                            router.get('/media', {
+                                page: mediaFiles.current_page - 1,
+                            });
                         }}
                     >
                         Previous
@@ -254,9 +276,13 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
                     <Button
                         variant="outline"
                         size="sm"
-                        disabled={mediaFiles.current_page === mediaFiles.last_page}
+                        disabled={
+                            mediaFiles.current_page === mediaFiles.last_page
+                        }
                         onClick={() => {
-                            router.get('/media', { page: mediaFiles.current_page + 1 });
+                            router.get('/media', {
+                                page: mediaFiles.current_page + 1,
+                            });
                         }}
                     >
                         Next
@@ -271,7 +297,7 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
                     onClick={() => setSelectedMedia(null)}
                 >
                     <div
-                        className="relative max-w-4xl max-h-[90vh] p-4"
+                        className="relative max-h-[90vh] max-w-4xl p-4"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <Button
@@ -284,7 +310,7 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
                         </Button>
                         {(() => {
                             const mediaUrl = getMediaUrl(selectedMedia);
-                            
+
                             if (!mediaUrl) {
                                 return (
                                     <div className="flex flex-col items-center justify-center rounded-lg bg-slate-100 p-12 dark:bg-slate-800">
@@ -297,8 +323,9 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
                                             Media not available
                                         </p>
                                         <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
-                                            {selectedMedia.status === 'processing' 
-                                                ? 'Media is still being processed' 
+                                            {selectedMedia.status ===
+                                            'processing'
+                                                ? 'Media is still being processed'
                                                 : 'Media file path is not available'}
                                         </p>
                                     </div>
@@ -325,5 +352,3 @@ export function MediaGallery({ mediaFiles, onDelete }: MediaGalleryProps) {
         </div>
     );
 }
-
-
